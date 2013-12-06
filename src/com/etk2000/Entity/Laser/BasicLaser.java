@@ -10,7 +10,7 @@ public class BasicLaser extends Laser {
 
 	public BasicLaser(double x, double y) {
 		super(laserWidth, laserHeight, 0, 0.25f);
-		texture = GamePackHandler.laserBasic;
+		textureName = "laserBasic";
 		power = 1;
 		this.x = x;
 		this.y = y;
@@ -18,7 +18,7 @@ public class BasicLaser extends Laser {
 
 	public BasicLaser(double x, double y, float speedY) {
 		super(laserWidth, laserHeight, 0, speedY);
-		texture = GamePackHandler.laserBasic;
+		textureName = "laserBasic";
 		power = 1;
 		if (speedY < 0)
 			fromBadie = true;
@@ -29,7 +29,7 @@ public class BasicLaser extends Laser {
 	@Override
 	public void draw() {
 		glEnable(GL_TEXTURE_2D);
-		texture.bind();
+		GamePackHandler.getTexture(textureName).bind();
 		glBegin(GL_QUADS);
 		{
 			glTexCoord2f(1, 1);// Texture: Upper-Left

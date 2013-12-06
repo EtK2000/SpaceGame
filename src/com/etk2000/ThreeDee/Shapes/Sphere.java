@@ -25,8 +25,8 @@ public class Sphere extends Shape3D {
 	public void render() {
 		glPushMatrix();
 		{
-			// glTranslated(x, y, z);
-			// glColor3f(1, 0, 0);
+			glTranslated(x, y, z);
+			//glColor3f(1, 0, 0);
 			s.draw(radius, quads, strips);
 		}
 		glPopMatrix();

@@ -14,7 +14,7 @@ public class BasicBadGuy extends Entity2DAbstract {
 	protected int dyingFrames = 30;
 
 	public BasicBadGuy(float width, float height, double x, double y) {
-		texture = GamePackHandler.BGBasic;
+		textureName = "BGBasic";
 		this.health = 1;
 		this.fullHealth = 1;
 		this.width = width;
@@ -55,7 +55,7 @@ public class BasicBadGuy extends Entity2DAbstract {
 			height = dyingFrames / height;
 		}
 		glEnable(GL_TEXTURE_2D);
-		texture.bind();
+		GamePackHandler.getTexture(textureName).bind();
 		glBegin(GL_QUADS);
 		{
 			glTexCoord2f(1, 1);// Texture: Upper-Left

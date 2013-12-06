@@ -55,7 +55,6 @@ public class GameBase {
 	/** Load The Junk **/
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args) {
-		OptionsMenu.loadSettings();
 		if (isIDE)
 			path = System.getProperty("user.dir");
 
@@ -74,9 +73,6 @@ public class GameBase {
 		/** Create The Display **/
 		try {
 			Display.setDisplayMode(new DisplayMode(DisplayHandler.width, DisplayHandler.height));
-			// Display.setIcon(new ByteBuffer[] { MyTools.getIcon(dataFolder +
-			// "/res/images/icon.png"),
-			// MyTools.getIcon(dataFolder + "/res/images/icon.png") });
 			Display.setIcon(new ByteBuffer[] {
 					new ImageIOImageData().imageToByteBuffer(
 							ImageIO.read(new File(dataFolder + "/res/images/iconx16.png")), false, false, null),
@@ -115,9 +111,10 @@ public class GameBase {
 			font.loadGlyphs();
 
 			GamePackHandler.Init();
-			GamePackHandler.listAllTexturePacks();// sets up the .EtK2000/SpaceGame/TexturePack/
-			GamePackHandler.loadTexturePack(new File(dataFolder + "/texturepacks/default.zip"));
+			GamePackHandler.listAllTexturePacks();// sets up the .EtK2000/SpaceGame/texturepacks/
+			GamePackHandler.loadTexturePack(dataFolder + "/texturepacks/default.zip");
 			GamePackHandler.downloadDefaultSounds();
+			OptionsMenu.loadSettings();
 
 			player = new Ship_Player(25, 25, DisplayHandler.width / 2, DisplayHandler.height / 2);
 			SaveMenu.loadPlayerData();

@@ -5,14 +5,13 @@ import java.util.ArrayList;
 import org.lwjgl.opengl.Display;
 
 import com.etk2000.FileHandling.DataFile;
+import com.etk2000.GameHandling.GamePackHandler;
 import com.etk2000.GameHandling.Localization;
 import com.etk2000.SideThreads.DisplayHandler;
 import com.etk2000.SpaceGame.GameBase;
 import com.etk2000.gui.Button;
 
 public class OptionsMenu {
-	// the language when the menu was opened last
-	public static Localization startLoc = Localization.curLoc;
 
 	/** return true if language changed **/
 	public static boolean printMenu() {
@@ -23,15 +22,16 @@ public class OptionsMenu {
 		Button back = new Button(Localization.curLoc.getString("menu_back"), DisplayHandler.width / 2, 50,
 				DisplayHandler.width / 2 * 1.5f, 75);
 
-		startLoc = Localization.curLoc;
+		Localization startLoc = Localization.curLoc;
+
 		Display.setTitle("Getters / Setters");
 		while (!Display.isCloseRequested()) {
 			DisplayHandler.clearDisplay();
 			gamepackSelect.render();
 			languageSelect.render();
 			back.render();
-			if (gamepackSelect.clicked()) {
-			}
+			if (gamepackSelect.clicked())
+				GamepackMenu.printMenu();
 			else if (languageSelect.clicked()) {
 				if (LocalizationMenu.printMenu()) {// relocalize all the buttons (if needed)
 					gamepackSelect.setText(Localization.curLoc.getString("optionsMenu_selectGamepack"));
@@ -42,7 +42,9 @@ public class OptionsMenu {
 			}
 			else if (back.clicked()) {
 				saveSettings();
-				return startLoc != Localization.curLoc;
+				if (startLoc != Localization.curLoc)
+					return true;
+				return false;
 			}
 			Display.update();
 			Display.sync(60);
@@ -54,7 +56,11 @@ public class OptionsMenu {
 
 	private static void saveSettings() {
 		DataFile df = new DataFile(GameBase.dataFolder + "/options.txt");
-		df.save("lang: " + Localization.curLoc.name() + '\n');
+		df.save("lang: "
+				+ Localization.curLoc.name()
+				+ "\npack: "
+				+ GamePackHandler.getCurrentTexturePack().getName()
+						.substring(0, GamePackHandler.getCurrentTexturePack().getName().lastIndexOf(".zip")));
 	}
 
 	public static void loadSettings() {
@@ -66,6 +72,9 @@ public class OptionsMenu {
 			if (values.get(i).contains("lang: "))
 				Localization.curLoc = Localization
 						.valueOf(values.get(i).substring(values.get(i).indexOf("lang: ") + 6));
+			else if (values.get(i).contains("pack: "))
+				GamePackHandler.loadTexturePack(GamePackHandler.TexturePackFolder + '/'
+						+ values.get(i).substring(values.get(i).indexOf("pack: ") + 6) + ".zip");
 		}
 	}
 }

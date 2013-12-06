@@ -2,8 +2,6 @@ package com.etk2000.Entity.Laser;
 
 import java.awt.Rectangle;
 
-import org.newdawn.slick.opengl.Texture;
-
 import com.etk2000.Entity.Entity2D;
 import com.etk2000.Entity.Entity2DAbstract;
 import com.etk2000.Entity.BadGuy.BasicBadGuy;
@@ -20,7 +18,7 @@ public abstract class Laser implements Entity2D {
 	protected float power;
 	protected double dx, dy, x = 0, y = 0;
 	protected Rectangle HitBox = new Rectangle();
-	protected static Texture texture;
+	protected String textureName;
 
 	public Laser(float width, float height, float speedX, float speedY) {
 		this.width = width;

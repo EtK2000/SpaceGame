@@ -22,7 +22,7 @@ public class Ship_Player extends Entity2DAbstract {
 	}
 
 	public Ship_Player(int width, int height, double x, double y, float speedX, float speedY) {
-		texture = GamePackHandler.thePlayer;
+		textureName = "thePlayer";
 		this.health = 20;// set max health
 		this.fullHealth = 20;
 		this.width = width;
@@ -47,7 +47,7 @@ public class Ship_Player extends Entity2DAbstract {
 	@Override
 	public void draw() {// x, y is the center
 		glEnable(GL_TEXTURE_2D);
-		texture.bind();
+		GamePackHandler.getTexture(textureName).bind();
 		/*
 		 * glBegin(GL_QUADS);
 		 * {

@@ -35,7 +35,7 @@ public class MainMenu {
 				SelectServer.printMenu();
 			}
 			else if (options.clicked()) {
-				if (OptionsMenu.printMenu()) {// if language changed
+				if (OptionsMenu.printMenu()) {
 					play.setText(Localization.curLoc.getString("mainMenu_play"));
 					multiPlayer.setText(Localization.curLoc.getString("mainMenu_multiPlayer"));
 					options.setText(Localization.curLoc.getString("mainMenu_options"));

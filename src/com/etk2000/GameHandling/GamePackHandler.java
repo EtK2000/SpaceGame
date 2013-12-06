@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -20,14 +22,7 @@ public class GamePackHandler {
 
 	/** TEXTURES **/
 	public static Texture nullTex = null;
-	public static Texture BGBasic = null;
-	public static Texture BGShooter = null;
-	public static Texture GUIArrow_down = null;
-	public static Texture GUIArrow_up = null;
-	public static Texture GUIButton = null;
-	public static Texture HealthBar_Boss = null;
-	public static Texture laserBasic = null;
-	public static Texture thePlayer = null;
+	private static Map<String, Texture> textures = new HashMap<>();
 
 	/** LOCALIZATIONS **/
 	public static boolean usingCustomLocalization = false;
@@ -53,7 +48,7 @@ public class GamePackHandler {
 			FileDownloading.download("https://dl.dropboxusercontent.com/u/44829607/SpaceGame_Resources.zip",
 					GameBase.dataFolder + "/res.zip");
 	}
-	
+
 	public static ArrayList<String> listAllTexturePacks() {
 		ArrayList<String> packs = new ArrayList<>();
 		File[] tmp = (new File(TexturePackFolder).listFiles());
@@ -77,17 +72,22 @@ public class GamePackHandler {
 		}
 	}
 
+	public static void loadTexturePack(String TexturePack) {
+		loadTexturePack(new File(TexturePack));
+	}
+
 	public static void reloadTexturePack() throws IOException {
 		nullTex = TextureLoader.getTexture("PNG", GamePackHandler.class.getResourceAsStream("/textures/missing.png"));
 		// read the "missing" texture from the Jar
-		BGBasic = nullTex;
-		BGShooter = nullTex;
-		GUIArrow_down = nullTex;
-		GUIArrow_up = nullTex;
-		GUIButton = nullTex;
-		HealthBar_Boss = nullTex;
-		laserBasic = nullTex;
-		thePlayer = nullTex;
+		textures.clear();
+		Texture BGBasic = nullTex;
+		Texture BGShooter = nullTex;
+		Texture GUIArrow_down = nullTex;
+		Texture GUIArrow_up = nullTex;
+		Texture GUIButton = nullTex;
+		Texture HealthBar_Boss = nullTex;
+		Texture laserBasic = nullTex;
+		Texture thePlayer = nullTex;
 
 		fontLoc = "fonts/Times New Roman.ttf";
 
@@ -123,10 +123,22 @@ public class GamePackHandler {
 			}
 		}
 		zip.close();
+		textures.put("BGBasic", BGBasic);
+		textures.put("BGShooter", BGShooter);
+		textures.put("GUIArrow_down", GUIArrow_down);
+		textures.put("GUIArrow_up", GUIArrow_up);
+		textures.put("GUIButton", GUIButton);
+		textures.put("HealthBar_Boss", HealthBar_Boss);
+		textures.put("laserBasic", laserBasic);
+		textures.put("thePlayer", thePlayer);
 	}
 
 	public static File getCurrentTexturePack() {
 		return currentTexturePack;
+	}
+
+	public static Texture getTexture(String textureName) {
+		return textures.get(textureName);// if no key it returns null
 	}
 
 	public static String getLocalization() {

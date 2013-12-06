@@ -6,11 +6,12 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import com.etk2000.Entity.Entity2D;
+import com.etk2000.Entity.AI.AI;
+import com.etk2000.Entity.AI.AI_Basic;
 import com.etk2000.Entity.BadGuy.BasicBadGuy;
 import com.etk2000.Entity.BadGuy.Boss;
 import com.etk2000.Entity.BadGuy.ShootingBadGuy;
 import com.etk2000.GameHandling.GameDelta;
-import com.etk2000.GameHandling.GamePackHandler;
 import com.etk2000.Levels.menu.GameOverMenu;
 import com.etk2000.Levels.menu.SaveMenu;
 import com.etk2000.SpaceGame.GameBase;
@@ -65,9 +66,9 @@ public class LevelHandler {
 			}
 			Level level4 = new Level(200, 400);
 			{
-				Entity2D bg1 = new Boss(25, 25, 55, 50, 20, 5, GamePackHandler.BGBasic);
-				Entity2D bg2 = new Boss(25, 25, 80, 25, 20, 5, GamePackHandler.BGBasic);
-				Entity2D bg3 = new Boss(25, 25, 105, 50, 20, 5, GamePackHandler.BGBasic);
+				Entity2D bg1 = new Boss(25, 25, 55, 50, 20, 5, "BGBasic");
+				Entity2D bg2 = new Boss(25, 25, 80, 25, 20, 5, "BGBasic");
+				Entity2D bg3 = new Boss(25, 25, 105, 50, 20, 5, "BGBasic");
 				level4.registerEntity(bg1);
 				level4.registerEntity(bg2);
 				level4.registerEntity(bg3);
@@ -100,11 +101,38 @@ public class LevelHandler {
 				level5.registerEntity(bg11);
 				level5.registerEntity(bg12);
 			}
+			Level level6 = new Level(800, 600);
+			{
+				class BG_AI extends ShootingBadGuy {
+					protected AI ai;
+
+					public BG_AI(float width, float height, double x, double y) {
+						super(width, height, x, y);
+						this.health = 10;
+						this.fullHealth = 10;
+						ai = new AI_Basic(this, (float) Math.sqrt(width * height), 0.2f, 0.2f);
+						ai.setTarget(GameBase.player);
+					}
+
+					@Override
+					public void update(int delta) {
+						dx = 0;
+						dy = 0;
+						ai.moveToTarget(delta);
+						super.update(delta);
+					}
+				}
+				BG_AI bg1 = new BG_AI(50, 50, 400, 100);
+				BG_AI bg2 = new BG_AI(50, 50, 10, 100);
+				level6.registerEntity(bg1);
+				level6.registerEntity(bg2);
+			}
 			registerLevel(level1);
 			registerLevel(level2);
 			registerLevel(level3);
 			registerLevel(level4);
 			registerLevel(level5);
+			registerLevel(level6);
 		}
 	}
 
@@ -129,7 +157,7 @@ public class LevelHandler {
 		Level lvl = getCurrentLevel();
 
 		if (!GameBase.player.alive) {
-			Mouse.setGrabbed(false);//show the cursor
+			Mouse.setGrabbed(false);// show the cursor
 			switch (GameOverMenu.printMenu()) {
 				case "continue":
 					GameBase.player.heal(20);
@@ -140,7 +168,7 @@ public class LevelHandler {
 				default:
 					System.exit(0);
 			}
-			Mouse.setGrabbed(true);//hide the cursor
+			Mouse.setGrabbed(true);// hide the cursor
 		}
 
 		// move all Entities
@@ -166,7 +194,7 @@ public class LevelHandler {
 			}
 			else {
 				Mouse.setGrabbed(false);
-				System.out.println("going 3D!");//beat all the 2D levels
+				System.out.println("going 3D!");// beat all the 2D levels
 				GameBase.is2D = false;
 			}
 		}

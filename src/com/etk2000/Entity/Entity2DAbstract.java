@@ -2,12 +2,10 @@ package com.etk2000.Entity;
 
 import java.awt.Rectangle;
 
-import org.newdawn.slick.opengl.Texture;
-
 public abstract class Entity2DAbstract implements Entity2D {
 	public float width, height, speedX, speedY;// public for powerups
 	protected double dx, dy, x, y;
-	protected Texture texture;
+	protected String textureName;
 	protected Rectangle HitBox = new Rectangle();
 	protected float health, fullHealth;
 	public boolean alive = true, dying = false;// for handling
@@ -29,54 +27,54 @@ public abstract class Entity2DAbstract implements Entity2D {
 
 	/** size **/
 	@Override
-	public float getHeight() {
+	public final float getHeight() {
 		return height;
 	}
 
 	@Override
-	public float getWidth() {
+	public final float getWidth() {
 		return width;
 	}
 
 	/** delta **/
 	@Override
-	public double getDX() {
+	public final double getDX() {
 		return dx;
 	}
 
 	@Override
-	public void setDX(double dx) {
+	public final void setDX(double dx) {
 		this.dx = dx;
 	}
 
 	@Override
-	public double getDY() {
+	public final double getDY() {
 		return dy;
 	}
 
 	@Override
-	public void setDY(double dy) {
+	public final void setDY(double dy) {
 		this.dy = dy;
 	}
 
 	/** location **/
 	@Override
-	public double getX() {
+	public final double getX() {
 		return x;
 	}
 
 	@Override
-	public void setX(double x) {
+	public final void setX(double x) {
 		this.x = x;
 	}
 
 	@Override
-	public double getY() {
+	public final double getY() {
 		return y;
 	}
 
 	@Override
-	public void setY(double y) {
+	public final void setY(double y) {
 		this.y = y;
 	}
 
@@ -93,7 +91,9 @@ public abstract class Entity2DAbstract implements Entity2D {
 				entity2D.getWidth(), entity2D.getHeight());
 	}
 
-	public void fullHeal() {
+	/** Health **/
+
+	public final void fullHeal() {
 		health = fullHealth;
 	}
 
@@ -109,7 +109,7 @@ public abstract class Entity2DAbstract implements Entity2D {
 			this.kill();
 	}
 
-	public float getHealth() {
+	public final float getHealth() {
 		return health;
 	}
 }

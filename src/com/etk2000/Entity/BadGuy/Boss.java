@@ -1,7 +1,5 @@
 package com.etk2000.Entity.BadGuy;
 
-import org.newdawn.slick.opengl.Texture;
-
 import com.etk2000.SideThreads.DisplayHandler;
 import com.etk2000.gui.GUIText;
 
@@ -10,9 +8,9 @@ import static org.lwjgl.opengl.GL11.glColor3f;
 public class Boss extends ShootingBadGuy {
 	private float fireRate;
 
-	public Boss(float width, float height, double x, double y, float fullHealth, float fireRate, Texture texture) {
+	public Boss(float width, float height, double x, double y, float fullHealth, float fireRate, String textureName) {
 		super(width, height, x, y);
-		this.texture = texture;
+		this.textureName = textureName;
 		this.health = fullHealth;// start with full health
 		this.fullHealth = fullHealth;
 		this.fireRate = fireRate;
@@ -37,7 +35,7 @@ public class Boss extends ShootingBadGuy {
 	}
 
 	@Override
-	public ShootingBadGuy getEntity() {
-		return new Boss(width, height, x, y, fullHealth, fireRate, texture);
+	public Boss getEntity() {
+		return new Boss(width, height, x, y, fullHealth, fireRate, textureName);
 	}
 }

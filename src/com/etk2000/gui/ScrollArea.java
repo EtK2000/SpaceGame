@@ -2,8 +2,6 @@ package com.etk2000.gui;
 
 import java.util.ArrayList;
 
-import com.etk2000.GameHandling.GamePackHandler;
-
 public class ScrollArea {
 	private ArrayList<ScrollAreaButton> buttons = new ArrayList<ScrollAreaButton>();
 	private Button scrollDown, scrollUp;
@@ -13,8 +11,8 @@ public class ScrollArea {
 	private float width, height;
 
 	public ScrollArea(double x, double y, float width, float height) {
-		scrollUp = new Button(".", x + width - 10, y - height / 2 + 10, 30, 30, GamePackHandler.GUIArrow_up);
-		scrollDown = new Button(",", x + width - 10, y + height / 2 - 10, 30, 30, GamePackHandler.GUIArrow_down);
+		scrollUp = new Button(".", x + width - 10, y - height / 2 + 10, 30, 30, "GUIArrow_up");
+		scrollDown = new Button(",", x + width - 10, y + height / 2 - 10, 30, 30, "GUIArrow_down");
 		this.x = x;
 		this.y = y;
 		this.width = width;

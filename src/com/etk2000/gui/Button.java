@@ -8,7 +8,6 @@ import org.lwjgl.input.Mouse;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
-import org.newdawn.slick.opengl.Texture;
 
 import com.etk2000.GameHandling.GamePackHandler;
 import com.etk2000.SideThreads.DisplayHandler;
@@ -18,13 +17,13 @@ public class Button {
 	protected String text;
 	protected double x, y;
 	protected float width, height;
-	private Texture texture;
+	private String textureName;
 	protected boolean ready = false, selected = false, selectable = true;
 	// ready to be selected, selected, can be selected
 	private int oldScreenWidth = DisplayHandler.width, oldScreenHeight = DisplayHandler.height;
 
 	public Button(String text, double x, double y, float width, float height) {
-		texture = GamePackHandler.GUIButton;
+		textureName = "GUIButton";
 		this.text = text;
 		if (font == null)
 			setupFont();
@@ -34,8 +33,8 @@ public class Button {
 		this.height = height;
 	}
 
-	public Button(String text, double x, double y, float width, float height, Texture texture) {
-		this.texture = texture;
+	public Button(String text, double x, double y, float width, float height, String textureName) {
+		this.textureName = textureName;
 		this.text = text;
 		if (font == null)
 			setupFont();
@@ -87,7 +86,7 @@ public class Button {
 			oldScreenWidth = DisplayHandler.width;
 		}
 		glEnable(GL_TEXTURE_2D);
-		texture.bind();
+		GamePackHandler.getTexture(textureName).bind();
 		glBegin(GL_QUADS);
 		{
 			if (!selectable) {

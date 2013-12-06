@@ -63,7 +63,7 @@ public class TextureModel {
 
 	private static Entity3D e3d;
 	private static Pyramid p;
-	private static Sphere s;
+	private static Sphere s, s2;
 
 	public static void main(String[] args) {
 		setUpDisplay();
@@ -79,7 +79,7 @@ public class TextureModel {
 		e3d = new Entity3DShip(1, 1, 1, 0, 0, 0);
 		p = new Pyramid(2, 2, 2, 5, 5, 5);
 		s = new Sphere(2, 16, 16, 0, 0, 0);
-		//s = new org.lwjgl.util.glu.Sphere();
+		s2 = new Sphere(2, 16, 16, 20, 20, 20);
 
 		float i = 0, j =0, k = 0;
 		while (!Display.isCloseRequested()) {
